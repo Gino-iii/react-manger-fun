@@ -1,7 +1,8 @@
 import React from 'react'
 import { Form, Input, Button, Card, message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { useAuthStore } from '@/stores/authStore'
+import { useAppDispatch } from '@/stores/hooks'
+import { login } from '@/stores/slices/authSlice'
 
 interface LoginForm {
   username: string
@@ -9,7 +10,7 @@ interface LoginForm {
 }
 
 const Login: React.FC = () => {
-  const { login } = useAuthStore()
+  const dispatch = useAppDispatch()
 
   const onFinish = async (values: LoginForm) => {
     try {
@@ -21,8 +22,8 @@ const Login: React.FC = () => {
         role: 'admin',
       }
       const mockToken = 'mock-jwt-token'
-      
-      login(mockUser, mockToken)
+
+      dispatch(login({ user: mockUser, token: mockToken }))
       message.success('登录成功')
     } catch (error) {
       message.error('登录失败')
@@ -74,7 +75,7 @@ const Login: React.FC = () => {
             </Button>
           </Form.Item>
         </Form>
-        
+
         <div style={{ textAlign: 'center', color: '#666' }}>
           <p>默认账号：admin / admin</p>
         </div>

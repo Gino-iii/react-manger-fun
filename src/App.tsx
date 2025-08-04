@@ -1,13 +1,14 @@
+
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import UserManagement from './pages/UserManagement'
 import NotFound from './pages/NotFound'
-import { useAuthStore } from './stores/authStore'
+import { useAppSelector } from './stores/hooks'
 
 function App() {
-  const { isAuthenticated } = useAuthStore()
+  const { isAuthenticated } = useAppSelector((state) => state.auth)
 
   if (!isAuthenticated) {
     return <Login />

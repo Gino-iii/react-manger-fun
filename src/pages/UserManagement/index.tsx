@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Table, Button, Space, Modal, Form, Input, Select, message, Popconfirm } from 'antd'
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { useAppSelector, useAppDispatch } from '@/stores/hooks'
+import { addUser, updateUser, deleteUser, setSelectedUser } from '@/stores/slices/userSlice'
 
 interface User {
   id: string
@@ -12,25 +14,8 @@ interface User {
 }
 
 const UserManagement: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: '1',
-      username: 'admin',
-      email: 'admin@example.com',
-      role: '管理员',
-      status: '启用',
-      createTime: '2024-01-01',
-    },
-    {
-      id: '2',
-      username: 'user1',
-      email: 'user1@example.com',
-      role: '普通用户',
-      status: '启用',
-      createTime: '2024-01-02',
-    },
-  ])
-
+  const dispatch = useAppDispatch()
+  const { users } = useAppSelector((state) => state.user)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editingUser, setEditingUser] = useState<User | null>(null)
   const [form] = Form.useForm()
@@ -106,7 +91,7 @@ const UserManagement: React.FC = () => {
   }
 
   const handleDelete = (id: string) => {
-    setUsers(users.filter(user => user.id !== id))
+    dispatch(deleteUser(id))
     message.success('删除成功')
   }
 
@@ -114,9 +99,7 @@ const UserManagement: React.FC = () => {
     form.validateFields().then((values) => {
       if (editingUser) {
         // 编辑用户
-        setUsers(users.map(user =>
-          user.id === editingUser.id ? { ...user, ...values } : user
-        ))
+        dispatch(updateUser({ ...editingUser, ...values }))
         message.success('更新成功')
       } else {
         // 新增用户
@@ -125,7 +108,7 @@ const UserManagement: React.FC = () => {
           ...values,
           createTime: new Date().toISOString().split('T')[0],
         }
-        setUsers([...users, newUser])
+        dispatch(addUser(newUser))
         message.success('添加成功')
       }
       setIsModalVisible(false)

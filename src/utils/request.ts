@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { message } from 'antd'
-import { useAuthStore } from '@/stores/authStore'
+import { store } from '@/stores'
 
 const request = axios.create({
   baseURL: '/api',
@@ -10,7 +10,7 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
   (config) => {
-    const token = useAuthStore.getState().token
+    const token = store.getState().auth.token
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -28,7 +28,7 @@ request.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      useAuthStore.getState().logout()
+      store.dispatch({ type: 'auth/logout' })
       message.error('登录已过期，请重新登录')
     } else {
       message.error(error.response?.data?.message || '请求失败')

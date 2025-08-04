@@ -8,7 +8,8 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import { useAuthStore } from '@/stores/authStore'
+import { useAppSelector, useAppDispatch } from '@/stores/hooks'
+import { logout } from '@/stores/slices/authSlice'
 
 const { Header, Sider, Content } = AntLayout
 
@@ -16,7 +17,8 @@ const Layout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
-  const { logout, user } = useAuthStore()
+  const dispatch = useAppDispatch()
+  const { user } = useAppSelector((state) => state.auth)
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken()
@@ -39,7 +41,7 @@ const Layout: React.FC = () => {
   }
 
   const handleLogout = () => {
-    logout()
+    dispatch(logout())
     navigate('/login')
   }
 
