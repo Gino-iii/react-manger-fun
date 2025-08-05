@@ -1,24 +1,11 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
-import { ConfigProvider } from 'antd'
-import zhCN from 'antd/locale/zh_CN'
-import { store, persistor } from './stores'
-import App from './App.tsx'
-import './index.css'
+import App from './App'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
-          <ConfigProvider locale={zhCN}>
-            <App />
-          </ConfigProvider>
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>,
-) 
+// 使用React 18的新API创建根节点并渲染应用
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  // 注意：这里注释掉了StrictMode，在生产环境中建议启用
+  // StrictMode会帮助发现潜在问题，但可能会触发重复渲染
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
+)
