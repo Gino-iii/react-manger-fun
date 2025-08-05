@@ -1,10 +1,10 @@
 
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import UserManagement from './pages/UserManagement'
-import NotFound from './pages/NotFound'
+import Login from './views/Login'
+import Dashboard from './views/Dashboard'
+import UserManagement from './views/UserManagement'
+import NotFound from './views/NotFound'
 import { useAppSelector } from './stores/hooks'
 
 function App() {

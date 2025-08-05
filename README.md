@@ -18,7 +18,7 @@
 src/
 ├── components/          # 公共组件
 │   └── Layout/         # 主布局组件
-├── pages/              # 页面组件
+├── views/              # 页面组件
 │   ├── Dashboard/      # 仪表盘
 │   ├── Login/          # 登录页
 │   ├── UserManagement/ # 用户管理
