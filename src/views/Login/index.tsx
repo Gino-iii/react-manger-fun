@@ -1,87 +1,53 @@
-import React from 'react'
-import { Form, Input, Button, Card, message } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { useAppDispatch } from '@/stores/hooks'
-import { login } from '@/stores/slices/authSlice'
+import { useState } from 'react'
+import styles from './index.module.less'
+import { Form, Input, Button } from 'antd'
+// import { UserOutlined, LockOutlined } from '@ant-design/icons'
+// import { useAppDispatch } from '@/stores/hooks'
+// import { login } from '@/stores/slices/authSlice'
 
-interface LoginForm {
-  username: string
-  password: string
-}
-
-const Login: React.FC = () => {
-  const dispatch = useAppDispatch()
-
-  const onFinish = async (values: LoginForm) => {
-    try {
-      // 模拟登录请求
-      const mockUser = {
-        id: '1',
-        username: values.username,
-        email: 'admin@example.com',
-        role: 'admin',
-      }
-      const mockToken = 'mock-jwt-token'
-
-      dispatch(login({ user: mockUser, token: mockToken }))
-      message.success('登录成功')
-    } catch (error) {
-      message.error('登录失败')
-    }
+export default function Login() {
+  const [loading, setLoading] = useState(false)
+  const onFinish = (values: any) => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+    console.log('Success:', values)
   }
 
   return (
-    <div style={{
-      height: '100vh',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-    }}>
-      <Card
-        title="系统登录"
-        style={{ width: 400 }}
-        headStyle={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}
-      >
-        <Form
-          name="login"
-          onFinish={onFinish}
-          autoComplete="off"
-          size="large"
-        >
-          <Form.Item
-            name="username"
-            rules={[{ required: true, message: '请输入用户名!' }]}
+    <div className={styles.login}>
+      <div className={styles.loginWrapper}>
+        {/* 登录页面标题 */}
+        <div className={styles.title}>系统登录</div>
+        {/* 登录表单 */}
+        <div className={styles.form}>
+          <Form
+            name="basic"
+            autoComplete="off"
+            onFinish={onFinish}
           >
-            <Input
-              prefix={<UserOutlined />}
-              placeholder="用户名"
-            />
-          </Form.Item>
+            <Form.Item
+              name="username"
+              rules={[{ required: true, message: '请输入用户名' }]}
+            >
+              <Input placeholder="请输入用户名" />
+            </Form.Item>
+            <Form.Item
+              name="userPwd"
+              rules={[{ required: true, message: '请输入密码' }]}
+            >
+              <Input placeholder="请输入密码" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" loading={loading}>
+                登录
+              </Button>
+            </Form.Item>
+          </Form>
 
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: '请输入密码!' }]}
-          >
-            <Input.Password
-              prefix={<LockOutlined />}
-              placeholder="密码"
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-              登录
-            </Button>
-          </Form.Item>
-        </Form>
-
-        <div style={{ textAlign: 'center', color: '#666' }}>
-          <p>默认账号：admin / admin</p>
         </div>
-      </Card>
+      </div>
     </div>
   )
-}
-
-export default Login 
+} 

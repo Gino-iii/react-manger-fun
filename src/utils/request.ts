@@ -1,19 +1,22 @@
 import axios from 'axios'
 import { message } from 'antd'
 import { store } from '@/stores'
-
-const request = axios.create({
-  baseURL: '/api',
-  timeout: 10000,
+import { showLoading, hideLoading } from '@/views/loading'
+const instance = axios.create({
+  timeout: 8000,
+  timeoutErrorMessage: '请求超时，请稍后再试',
+  withCredentials: true,
+  // 请求头配置
+  headers: {
+    // 接口调用码，用于API认证
+    icode: '08AE8AC35F5A00E8'
+  }
 })
 
 // 请求拦截器
-request.interceptors.request.use(
+instance.interceptors.request.use(
   (config) => {
-    const token = store.getState().auth.token
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
+    if (config.showLoading) showLoading()
     return config
   },
   (error) => {
@@ -22,7 +25,7 @@ request.interceptors.request.use(
 )
 
 // 响应拦截器
-request.interceptors.response.use(
+instance.interceptors.response.use(
   (response) => {
     return response.data
   },
@@ -37,4 +40,4 @@ request.interceptors.response.use(
   }
 )
 
-export default request 
+

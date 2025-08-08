@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
 
 interface User {
   id: string
@@ -45,11 +43,4 @@ const authSlice = createSlice({
 
 export const { login, logout, updateUser } = authSlice.actions
 
-// 持久化配置
-const authPersistConfig = {
-  key: 'auth',
-  storage,
-  whitelist: ['user', 'token', 'isAuthenticated'],
-}
-
-export default persistReducer(authPersistConfig, authSlice.reducer) 
+export default authSlice.reducer 
