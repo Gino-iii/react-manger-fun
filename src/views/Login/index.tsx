@@ -1,18 +1,34 @@
 import { useState } from 'react'
 import styles from './index.module.less'
 import { Form, Input, Button } from 'antd'
+import api from '@/api'
+import storage from '@/utils/storage'
 // import { UserOutlined, LockOutlined } from '@ant-design/icons'
 // import { useAppDispatch } from '@/stores/hooks'
 // import { login } from '@/stores/slices/authSlice'
 
 export default function Login() {
   const [loading, setLoading] = useState(false)
-  const onFinish = (values: any) => {
-    setLoading(true)
-    setTimeout(() => {
+
+  const onFinish = async (values: any) => {
+    try {
+      setLoading(true)
+
+      const data = await api.login(values)
+
       setLoading(false)
-    }, 1000)
-    console.log('Success:', values)
+
+      storage.set('token', data)
+      // 更新全局状态中的token，通知其他组件用户已登录
+
+
+
+
+    } catch (error) {
+      setLoading(false)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
