@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Table, Button, Space, Modal, Form, Input, Select, message, Popconfirm } from 'antd'
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { useAppSelector, useAppDispatch } from '@/stores/hooks'
-import { addUser, updateUser, deleteUser, setSelectedUser } from '@/stores/slices/userSlice'
+import { useAppSelector, useAppDispatch } from '@/store/hooks'
+import { addUser, updateUser, deleteUser, setSelectedUser } from '@/store/slices/userSlice'
 
 interface User {
   id: string
-  username: string
+  userName: string
   email: string
   role: string
   status: string
@@ -28,8 +28,8 @@ const UserManagement: React.FC = () => {
     },
     {
       title: '用户名',
-      dataIndex: 'username',
-      key: 'username',
+      dataIndex: 'userName',
+      key: 'userName',
     },
     {
       title: '邮箱',
@@ -135,7 +135,7 @@ const UserManagement: React.FC = () => {
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            name="username"
+            name="userName"
             label="用户名"
             rules={[{ required: true, message: '请输入用户名' }]}
           >

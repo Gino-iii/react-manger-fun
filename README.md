@@ -23,7 +23,7 @@ src/
 │   ├── Login/          # 登录页
 │   ├── UserManagement/ # 用户管理
 │   └── NotFound/       # 404页面
-├── stores/             # 状态管理
+├── store/             # 状态管理
 │   └── authStore.ts    # 认证状态
 ├── utils/              # 工具函数
 │   └── request.ts      # HTTP请求封装

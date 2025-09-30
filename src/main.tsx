@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import { store, persistor } from './stores'
+import { store, persistor } from './store'
 import App from './App'
 
 // 使用React 18的新API创建根节点并渲染应用

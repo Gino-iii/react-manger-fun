@@ -5,7 +5,7 @@ import Login from './views/Login'
 import Dashboard from './views/Dashboard'
 import UserManagement from './views/UserManagement'
 import NotFound from './views/NotFound'
-import { useAppSelector } from './stores/hooks' */
+import { useAppSelector } from './store/hooks' */
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
 

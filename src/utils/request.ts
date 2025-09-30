@@ -23,7 +23,7 @@ const instance = axios.create({
   // 请求头配置
   headers: {
     // 接口调用码，用于API认证
-    icode: '08AE8AC35F5A00E8'
+    icode: '522B3BCDE1777C0A'
   }
 })
 

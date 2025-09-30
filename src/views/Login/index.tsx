@@ -1,28 +1,36 @@
 import { useState } from 'react'
 import styles from './index.module.less'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import api from '@/api'
 import storage from '@/utils/storage'
-// import { UserOutlined, LockOutlined } from '@ant-design/icons'
-// import { useAppDispatch } from '@/stores/hooks'
-// import { login } from '@/stores/slices/authSlice'
+import { useAppDispatch } from '@/store/hooks'
+import { updateToken, updateUserInfo } from '@/store/slices/authSlice'
 
 export default function Login() {
   const [loading, setLoading] = useState(false)
+  const dispatch = useAppDispatch()
 
   const onFinish = async (values: any) => {
     try {
       setLoading(true)
 
-      const data = await api.login(values)
+      // 1. 登录获取token
+      const token = await api.login(values)
+      storage.set('token', token)
+      dispatch(updateToken(token))
+
+      // 2. 获取用户信息
+      const userInfo = await api.getUserInfo()
+      dispatch(updateUserInfo(userInfo))
 
       setLoading(false)
+      message.success('登录成功')
 
-      storage.set('token', data)
-      // 更新全局状态中的token，通知其他组件用户已登录
-
-
-
+      // 3. 跳转页面
+      const params = new URLSearchParams(location.search)
+      setTimeout(() => {
+        location.href = params.get('callback') || '/welcome'
+      }, 500)
 
     } catch (error) {
       setLoading(false)
@@ -44,7 +52,7 @@ export default function Login() {
             onFinish={onFinish}
           >
             <Form.Item
-              name="username"
+              name="userName"
               rules={[{ required: true, message: '请输入用户名' }]}
             >
               <Input placeholder="请输入用户名" />
@@ -53,7 +61,7 @@ export default function Login() {
               name="userPwd"
               rules={[{ required: true, message: '请输入密码' }]}
             >
-              <Input placeholder="请输入密码" />
+              <Input type="password" placeholder="请输入密码" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={loading}>

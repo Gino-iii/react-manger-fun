@@ -8,8 +8,8 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import { useAppSelector, useAppDispatch } from '@/stores/hooks'
-import { logout } from '@/stores/slices/authSlice'
+import { useAppSelector, useAppDispatch } from '@/store/hooks'
+import { logout } from '@/store/slices/authSlice'
 
 const { Header, Sider, Content } = AntLayout
 
@@ -70,7 +70,7 @@ const Layout: React.FC = () => {
             }}
           />
           <div style={{ float: 'right', marginRight: 24 }}>
-            <span style={{ marginRight: 16 }}>欢迎，{user?.username}</span>
+            <span style={{ marginRight: 16 }}>欢迎，{user?.userName}</span>
             <Button
               type="text"
               icon={<LogoutOutlined />}

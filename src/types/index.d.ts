@@ -16,3 +16,16 @@ interface Window {
 	// 百度地图传统版本库
 	BMapLib: any
 }
+
+/**
+ * 声明样式模块
+ */
+declare module '*.module.less' {
+	const classes: { [key: string]: string }
+	export default classes
+}
+
+declare module '*.less' {
+	const content: any
+	export default content
+}
