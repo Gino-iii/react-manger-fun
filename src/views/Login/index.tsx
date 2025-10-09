@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styles from './index.module.less'
 import { Form, Input, Button, message } from 'antd'
-import api from '@/api'
+import api from '@/api/index'
 import storage from '@/utils/storage'
 import { useAppDispatch } from '@/store/hooks'
 import { updateToken, updateUserInfo } from '@/store/slices/authSlice'

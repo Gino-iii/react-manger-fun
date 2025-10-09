@@ -9,7 +9,7 @@ export default {
   // ==================== 用户认证相关 ====================
   /**
    * 用户登录
-   * @param params 登录参数（用户名、密码等）
+   * @param params 登录参数（用户名、密码等） 
    * @returns 登录token
    */
   login(params: Login.params) {

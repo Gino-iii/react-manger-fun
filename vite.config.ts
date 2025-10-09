@@ -4,7 +4,11 @@
  */
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { fileURLToPath } from 'url'
 import path from 'path'
+
+// 在 ES 模块中获取 __dirname
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,7 +26,9 @@ export default defineConfig({
     alias: {
       // 配置路径别名，@指向src目录，方便导入模块
       '@': path.resolve(__dirname, './src')
-    }
+    },
+    // 配置模块解析的扩展名顺序
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   },
   // 插件配置
   plugins: [react()]  // 使用React插件支持JSX和热更新
