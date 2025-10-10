@@ -70,7 +70,7 @@ instance.interceptors.response.use(
 
     // 处理token过期的情况
     if (data.code === 500001) {
-      message.error(data.msg)
+      message?.error(data.msg)
       // 清除本地存储的token
       storage.remove('token')
       // 跳转到登录页面，并记录当前页面URL
@@ -82,7 +82,7 @@ instance.interceptors.response.use(
         return Promise.resolve(data)
       } else {
         // 显示错误信息
-        message.error(data.msg)
+        message?.error(data.msg)
         return Promise.reject(data)
       }
     }
@@ -93,7 +93,7 @@ instance.interceptors.response.use(
   // 响应错误处理
   error => {
     hideLoading()
-    message.error(error.message)
+    message?.error(error.message)
     return Promise.reject(error.message)
   }
 )

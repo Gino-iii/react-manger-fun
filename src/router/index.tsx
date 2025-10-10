@@ -3,6 +3,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import Welcome from '@/views/welcome'
 import Layout from '@/layout'
 import Login from '@/views/Login'
+import AuthLoader from './AuthLoader'
 
 export const router = [
   {
@@ -17,6 +18,7 @@ export const router = [
     // 主布局路由，包含权限验证和懒加载
     id: 'layout',
     element: <Layout />,
+    loader: AuthLoader,
     children: [
       {
         path: '/welcome',

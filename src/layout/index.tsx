@@ -1,45 +1,55 @@
 // import { Layout } from 'antd'
 // const { Content, Sider } = Layout
 import styles from './index.module.less'
-import { Outlet } from 'react-router-dom'
-
-// import { useAppSelector } from '@/store/hooks'
-
-// const App: React.FC = () => {
-//   // 从全局状态中获取用户信息
-//   const userInfo = useAppSelector(state => state.auth.userInfo)
-
-//   if (!userInfo._id) {
-//     console.log('userInfo._id', userInfo._id)
-//     return null
-//   }
-
-//   return (
-//     <Layout >
-//       <Sider className={styles.sider}>Sider</Sider>
-//       <Content className={styles.content}>Content</Content>
-//     </Layout>
-//   )
-// }
-
-// export default App
-import React, { useState } from 'react';
+import { Outlet, useLocation, useRouteLoaderData, Navigate } from 'react-router-dom'
+import { useAppSelector } from '@/store/hooks'
+import { useAppDispatch } from '@/store/hooks'
+// import { updateCollapsed } from '@/store/slices/uiSlice'
+import React from 'react';
+import { searchRoute } from '@/utils'
+import { IAuthLoader } from '@/router/AuthLoader'
+import { router } from '@/router'
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
+
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme } from 'antd';
+import NavHeader from '@/components/NavHeader'
 
-const { Header, Sider } = Layout;
+const { Sider } = Layout;
 
 const App: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+
+  // 从全局状态中获取侧边栏折叠状态、用户信息和更新方法
+
+
+  // 从全局状态中获取用户信息
+  const userInfo = useAppSelector(state => state.auth.userInfo)
+  const collapsed = useAppSelector(state => state.ui.collapsed)
+
+  // const dispatch = useAppDispatch()
+  if (!userInfo._id) {
+    console.log('userInfo._id', userInfo._id)
+    return null
+  }
+  // 获取当前路由路径
+  const { pathname } = useLocation()
+  // 根据当前路径查找对应的路由配置
+  const route = searchRoute(pathname, router)
+
+  const data = useRouteLoaderData('layout') as IAuthLoader
+  if (route && route.meta?.auth === false) {
+
+  } else {
+    const staticPath = ['/welcome', '/403', '/404']
+    if (!data.menuPathList.includes(pathname) && !staticPath.includes(pathname)) {
+      return <Navigate to='/403' />
+    }
+  }
+
+
 
   return (
     <Layout style={{ height: '100%' }}>
@@ -69,18 +79,20 @@ const App: React.FC = () => {
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+        {/* <Header style={{ padding: 0, background: colorBgContainer }}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => dispatch(updateCollapsed())}
             style={{
               fontSize: '16px',
               width: 64,
               height: 64,
             }}
           />
-        </Header>
+        </Header> */}
+
+        <NavHeader />
         {/* 内容区域容器 */}
         <div className={styles.content}>
           <div className={styles.wrapper}>
@@ -94,4 +106,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default App
