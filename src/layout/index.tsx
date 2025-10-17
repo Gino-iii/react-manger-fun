@@ -79,18 +79,7 @@ const App: React.FC = () => {
         />
       </Sider>
       <Layout>
-        {/* <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => dispatch(updateCollapsed())}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
-          />
-        </Header> */}
+
 
         <NavHeader />
         {/* 内容区域容器 */}
