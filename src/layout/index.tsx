@@ -3,7 +3,7 @@
 import styles from './index.module.less'
 import { Outlet, useLocation, useRouteLoaderData, Navigate } from 'react-router-dom'
 import { useAppSelector } from '@/store/hooks'
-import { useAppDispatch } from '@/store/hooks'
+// import { useAppDispatch } from '@/store/hooks'
 // import { updateCollapsed } from '@/store/slices/uiSlice'
 import React from 'react';
 import { searchRoute } from '@/utils'
@@ -15,7 +15,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu } from 'antd';
 import NavHeader from '@/components/NavHeader'
 
 const { Sider } = Layout;
