@@ -9,19 +9,12 @@ import React from 'react';
 import { searchRoute } from '@/utils'
 import { IAuthLoader } from '@/router/AuthLoader'
 import { router } from '@/router'
-import {
-
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import Menu from '@/components/Menu'
+import { Layout } from 'antd';
 import NavHeader from '@/components/NavHeader'
-
+import NavFooter from '@/components/NavFooter'
 const { Sider } = Layout;
-
 const App: React.FC = () => {
-
   // 从全局状态中获取侧边栏折叠状态、用户信息和更新方法
 
 
@@ -54,32 +47,9 @@ const App: React.FC = () => {
   return (
     <Layout style={{ height: '100%' }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <UserOutlined />,
-              label: 'nav 1',
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
-          ]}
-        />
+        <Menu />
       </Sider>
       <Layout>
-
 
         <NavHeader />
         {/* 内容区域容器 */}
@@ -88,7 +58,7 @@ const App: React.FC = () => {
             {/* 路由出口，渲染子路由组件 */}
             <Outlet></Outlet>
           </div>
-
+          <NavFooter />
         </div>
       </Layout>
     </Layout>
