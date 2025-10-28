@@ -1,10 +1,11 @@
-// import { LazyLoad } from './LazyLoad'
+import React from 'react'
+
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import Welcome from '@/views/welcome'
 import Layout from '@/layout'
 import Login from '@/views/Login'
 import AuthLoader from './AuthLoader'
-
+import { lazyLoad } from './LazyLoad'
 export const router = [
   {
     path: '/',
@@ -23,6 +24,10 @@ export const router = [
       {
         path: '/welcome',
         element: <Welcome />
+      },
+      {
+        path: '/userList',
+        element: lazyLoad(React.lazy(() => import('@/views/system/user')))
       }
     ]
   }
